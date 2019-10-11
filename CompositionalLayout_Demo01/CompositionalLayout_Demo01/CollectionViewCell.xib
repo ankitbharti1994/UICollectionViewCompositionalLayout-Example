@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="gTV-IL-0wX" customClass="CollectionViewCell" customModule="CompositionalLayout_Demo01" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="56"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="56"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ayd-dP-A8H">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="56"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abi-VU-SdZ">
+                                <rect key="frame" x="68" y="10" width="14" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="abi-VU-SdZ" firstAttribute="centerY" secondItem="Ayd-dP-A8H" secondAttribute="centerY" id="VaC-0g-Znc"/>
+                            <constraint firstItem="abi-VU-SdZ" firstAttribute="centerX" secondItem="Ayd-dP-A8H" secondAttribute="centerX" id="kVW-3R-An5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Ayd-dP-A8H" secondAttribute="trailing" id="Q5Q-m1-vA6"/>
+                <constraint firstAttribute="bottom" secondItem="Ayd-dP-A8H" secondAttribute="bottom" id="VRe-vW-WW1"/>
+                <constraint firstItem="Ayd-dP-A8H" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="dHg-s2-jNY"/>
+                <constraint firstItem="Ayd-dP-A8H" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="irw-ap-cFF"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="150" height="56"/>
+            <connections>
+                <outlet property="numberLabel" destination="abi-VU-SdZ" id="mWq-dx-3QZ"/>
+            </connections>
+            <point key="canvasLocation" x="210.1449275362319" y="146.65178571428569"/>
+        </collectionViewCell>
+    </objects>
+</document>
