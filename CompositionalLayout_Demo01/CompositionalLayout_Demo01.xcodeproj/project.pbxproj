@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE27FC282353172900E63096 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27FC272353172900E63096 /* DataModel.swift */; };
 		CEB6EB652351149D003070BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB6EB642351149D003070BA /* AppDelegate.swift */; };
 		CEB6EB672351149D003070BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB6EB662351149D003070BA /* SceneDelegate.swift */; };
 		CEB6EB6C2351149D003070BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEB6EB6A2351149D003070BA /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE27FC272353172900E63096 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		CEB6EB612351149D003070BA /* CompositionalLayout_Demo01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompositionalLayout_Demo01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB6EB642351149D003070BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEB6EB662351149D003070BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				CEB6EB78235114C5003070BA /* CollectionViewCell.swift */,
 				CEB6EB79235114C5003070BA /* CollectionViewCell.xib */,
 				CEB6EB6A2351149D003070BA /* Main.storyboard */,
+				CE27FC272353172900E63096 /* DataModel.swift */,
 				CEB6EB6D235114A0003070BA /* Assets.xcassets */,
 				CEB6EB6F235114A0003070BA /* LaunchScreen.storyboard */,
 				CEB6EB72235114A0003070BA /* Info.plist */,
@@ -155,6 +158,7 @@
 				CEB6EB652351149D003070BA /* AppDelegate.swift in Sources */,
 				CEB6EB7A235114C5003070BA /* CollectionViewCell.swift in Sources */,
 				CEB6EB672351149D003070BA /* SceneDelegate.swift in Sources */,
+				CE27FC282353172900E63096 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +307,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = H83TSUZGC5;
 				INFOPLIST_FILE = CompositionalLayout_Demo01/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +329,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = H83TSUZGC5;
 				INFOPLIST_FILE = CompositionalLayout_Demo01/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

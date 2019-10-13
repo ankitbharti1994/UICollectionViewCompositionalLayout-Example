@@ -10,44 +10,19 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class CollectionViewController: UICollectionViewController {
+class CollectionViewController: UIViewController {
+    @IBOutlet private weak var collectionView: UICollectionView!
+    
+    private lazy var dataSource = createDataSource()
 
-    private var numbers = [String]()
-    
-    enum SectionLayoutKind: Int, CaseIterable {
-        case list, grid3, grid5
-        
-        private var columnCount: Int {
-            switch self {
-            case .list:
-                return 1
-                
-            case .grid3:
-                return 3
-                
-            case .grid5:
-                return 5
-            }
-        }
-        
-        func columnCount(for layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-            let wide = layoutEnvironment.container.contentSize.width > 800
-            let column = columnCount
-            return wide ? column * 2 : column
-        }
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for i in 1...20 {
-            numbers.append("\(i)")
-        }
         
         // Register cell classes
         self.collectionView!.register(UINib(nibName: String(describing: CollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView.collectionViewLayout = createLayout3()
+        self.collectionView.dataSource = dataSource
+        configureModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +37,9 @@ class CollectionViewController: UICollectionViewController {
     
     private func createLayout1() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let badgeItem = self.createBadgeItem()
+        let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [badgeItem])
+        
         item.contentInsets = NSDirectionalEdgeInsets(top: 5.0, leading: 5.0, bottom: 5.0, trailing: 5.0)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
@@ -77,10 +54,13 @@ class CollectionViewController: UICollectionViewController {
     
     private func createLayout2() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
+        let badgeItem = self.createBadgeItem()
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [badgeItem])
+                
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60.0))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 5)
         group.interItemSpacing = .fixed(10.0)
         
         let section = NSCollectionLayoutSection(group: group)
@@ -97,7 +77,7 @@ class CollectionViewController: UICollectionViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             guard let sectionLayoutKind = SectionLayoutKind(rawValue: sectionIndex) else { return nil }
-            let columnCount = sectionLayoutKind.columnCount(for: layoutEnvironment)
+            let columnCount = sectionLayoutKind.columnCount(for: layoutEnvironment.container.contentSize.width)
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -116,21 +96,61 @@ class CollectionViewController: UICollectionViewController {
         
         return layout
     }
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+    
+    /// create supplementry item
+    private func createBadgeItem() -> NSCollectionLayoutSupplementaryItem {
+        let badgeAchor = NSCollectionLayoutAnchor(edges: [.top, .trailing],
+                                                  fractionalOffset: CGPoint(x: 0.3, y: -0.3))
+        
+        let badgeSize = NSCollectionLayoutSize(widthDimension: .absolute(20),
+                                               heightDimension: .absolute(20))
+        
+        let badge = NSCollectionLayoutSupplementaryItem(layoutSize: badgeSize,
+                                                        elementKind: "badge",
+                                                        containerAnchor: badgeAchor)
+        return badge
     }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numbers.count
+    
+    private func createDataSource() -> UICollectionViewDiffableDataSource<SectionLayoutKind, Model> {
+        let dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, Model>(collectionView: collectionView) { (cv, indexpath, model) -> UICollectionViewCell? in
+            
+            guard let cell = cv.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexpath) as? CollectionViewCell else {
+                fatalError("cell couldn't find")
+            }
+                
+            cell.configure(by: model.value)
+            return cell
+        }
+        
+        return dataSource
     }
+    
+    private func configureModel() {
+        var listData = [Model]()
+        var grid3Data = [Model]()
+        var grid5Data = [Model]()
+        
+        for i in 1...10 {
+            let listModel = Model(value: "\(i)")
+            let grid3Model = Model(value: "\(i)")
+            let grid5Model = Model(value: "\(i)")
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewCell
-        cell.configure(by: numbers[indexPath.row])
-        return cell
+            listData.append(listModel)
+            grid3Data.append(grid3Model)
+            grid5Data.append(grid5Model)
+        }
+        
+        let dataList = DataList(list: listData, grid3: grid3Data, grid5: grid5Data)
+        update(dataList: dataList)
+    }
+    
+    private func update(dataList: DataList, animation: Bool = true) {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Model>()
+        snapshot.appendSections(SectionLayoutKind.allCases)
+        snapshot.appendItems(dataList.list, toSection: .list)
+        snapshot.appendItems(dataList.grid3, toSection: .grid3)
+        snapshot.appendItems(dataList.grid5, toSection: .grid5)
+     
+        self.dataSource.apply(snapshot, animatingDifferences: animation)
     }
 }
